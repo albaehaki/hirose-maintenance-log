@@ -92,6 +92,11 @@ Browser ──► nginx (web) ──/api/──► Hono API (api) ──► Post
   masalah CORS di production.
 - **SPA fallback** (`try_files $uri $uri/ /index.html`): refresh di
   `/requests/1` tidak menjadi 404.
+- **Layout sidebar**: setelah login, navigasi utama ada di sidebar kiri
+  (Daftar Request, Request Baru, Kelola User untuk admin, Logout) dengan
+  info user di bawah. Di layar kecil sidebar berubah jadi *off-canvas* dengan
+  tombol hamburger. Form tambah user tampil dalam **modal** supaya halaman
+  kelola user tetap bersih (+ pencarian user).
 - **RBAC terpusat**: `policy.ts` berisi 8 baris matriks permission sebagai
   fungsi murni; route hanya memanggil `canX(...)`. Satu tempat untuk mengubah
   aturan, satu tempat untuk mengetes.

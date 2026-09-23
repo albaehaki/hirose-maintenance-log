@@ -41,22 +41,12 @@ async function remove(id: number) {
   await api.delete(`/requests/${id}`);
   await load();
 }
-
-async function doLogout() {
-  await auth.logout();
-  window.location.href = '/login';
-}
 </script>
 
 <template>
   <section>
     <header class="bar">
-      <h1>Maintenance Requests</h1>
-      <div class="bar-actions">
-        <RouterLink class="btn primary" to="/requests/new">+ Request Baru</RouterLink>
-        <RouterLink v-if="auth.canManageUsers" class="btn ghost" to="/users">Kelola User</RouterLink>
-        <button class="btn ghost" @click="doLogout">Logout</button>
-      </div>
+      <h1>Daftar Request Maintenance</h1>
     </header>
 
     <div class="filters">
