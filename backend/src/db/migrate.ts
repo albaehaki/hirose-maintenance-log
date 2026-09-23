@@ -1,10 +1,13 @@
 import 'dotenv/config';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { db, pool } from './client.js';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 
-// Jalankan migrasi dari folder drizzle/
-const migrationsFolder = fileURLToPath(new URL('../../drizzle', import.meta.url));
+// Folder migrasi relatif ke direktori kerja, supaya path konsisten
+// di dua konteks:
+//   - lokal   (pnpm db:migrate dari backend/) → backend/drizzle
+//   - docker  (WORKDIR /app)                 → /app/drizzle
+const migrationsFolder = resolve(process.cwd(), 'drizzle');
 
 try {
   await migrate(db, { migrationsFolder });
