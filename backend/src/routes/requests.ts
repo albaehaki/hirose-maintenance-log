@@ -62,6 +62,36 @@ requestsRoute.get('/', async (c) => {
   return c.json({ data: rows });
 });
 
+/* ── BONUS: Audit trail — riwayat perubahan status ──
+   ⚠️ Route ini HARUS sebelum '/:id' supaya 'history' tidak
+   tertangkap sebagai parameter id oleh Hono.              */
+requestsRoute.get('/:id/history', async (c) => {
+  const user = c.get('user');
+  const id = Number(c.req.param('id'));
+  if (!Number.isInteger(id)) return c.json({ error: 'BAD_REQUEST', message: 'ID tidak valid' }, 400);
+
+  const found = await db.select().from(requests).where(eq(requests.id, id)).limit(1);
+  if (!found[0]) return c.json({ error: 'NOT_FOUND', message: 'Request tidak ditemukan' }, 404);
+  if (!canViewRequest(user as any, found[0])) return c.json({ error: 'FORBIDDEN' }, 403);
+
+  const history = await db
+    .select({
+      id: requestAudit.id,
+      fromStatus: requestAudit.fromStatus,
+      toStatus: requestAudit.toStatus,
+      note: requestAudit.note,
+      createdAt: requestAudit.createdAt,
+      actorName: users.name,
+      actorRole: users.role,
+    })
+    .from(requestAudit)
+    .innerJoin(users, eq(users.id, requestAudit.actorId))
+    .where(eq(requestAudit.requestId, id))
+    .orderBy(requestAudit.createdAt);
+
+  return c.json({ data: history });
+});
+
 /* ── GET satu request ── */
 requestsRoute.get('/:id', async (c) => {
   const user = c.get('user');
