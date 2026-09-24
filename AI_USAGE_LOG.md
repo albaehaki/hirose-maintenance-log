@@ -17,7 +17,7 @@ Draf ini yang dirapikan ke bagian **AI Disclosure** di README.
 | Schema database & migrasi Drizzle | Draf awal AI, saya review SQL hasil generate | Saya baca file SQL-nya baris per baris sebelum commit |
 | Route CRUD requests/users + validasi zod | Draf AI, saya sesuaikan | Pola CRUD standar; keputusan aturan tetap di policy.ts yang saya tulis |
 | `policy.ts` — matriks permission | **Saya tulis sendiri** | Ini inti soal — harus 100% saya pahami untuk interview |
-| `auth/session.ts` — session token | AI menyarankan JWT, **saya tolak** | Brief minta logout sejati; saya pilih session token di DB |
+| `auth/session.ts` — session token | AI menyarankan JWT, **saya tolak** | Soal minta logout sejati; saya pilih session token di DB |
 | Tes matriks permission (30 tes) | Draf awal AI, saya sesuaikan skenario + base URL | Skenario sudah saya pahami dari matriks; AI mempercepat penulisan boilerplate test |
 | Dockerfile, docker-compose, nginx.conf | AI menulis, saya debug | Ada 3 bug yang saya dan AI telusuri bersama: pnpm 10 policy, path migrasi, tests tidak ke-copy |
 | Jenkinsfile | AI menulis, saya jelaskan tiap stage di README | Jenkins tidak bisa dijalankan; kualitas = bisa dijelaskan |
@@ -33,7 +33,7 @@ Draf ini yang dirapikan ke bagian **AI Disclosure** di README.
 
 ## Satu kasus di mana saya menolak hasil AI
 
-AI menyarankan **JWT di localStorage** untuk auth. Saya tolak karena brief
+AI menyarankan **JWT di localStorage** untuk auth. Saya tolak karena soal
 menyebut *"Login and logout"* — logout sejati butuh token yang bisa dicabut
 di server. Saya ganti dengan session token opaque di tabel `sessions`
 (+ httpOnly cookie + header Bearer agar bisa diuji via curl), dan menulis
@@ -44,4 +44,4 @@ ulang middleware-nya.
 - Setiap blok kode di-typecheck (`tsc --noEmit` / `vue-tsc --noEmit`) sebelum commit.
 - Setiap commit = unit logis yang benar-benar berjalan (tidak ada commit "kode mati").
 - RBAC diverifikasi 2x: uji manual 16 skenario curl, lalu 30 tes otomatis dari dalam container Docker.
-- `docker compose up` diuji dari clean clone (lihat README) — sesuai permintaan brief.
+- `docker compose up` diuji dari clean clone (lihat README) — sesuai permintaan soal.
