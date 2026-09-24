@@ -140,7 +140,7 @@ onMounted(fetchUsers);
             <p v-if="error" class="error">{{ error }}</p>
             <div class="modal-actions">
               <button type="button" class="btn ghost" @click="closeModal">Batal</button>
-              <button class="btn primary" :disabled="busy">{{ busy ? 'Menyimpan…' : 'Tambah User' }}</button>
+              <button type="button" class="btn primary" :disabled="busy" @click="createUser">{{ busy ? 'Menyimpan…' : 'Tambah User' }}</button>
             </div>
           </form>
         </div>

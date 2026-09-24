@@ -521,11 +521,9 @@ code {
 @keyframes modal-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -556,8 +554,18 @@ code {
 }
 
 .modal-form input,
-.modal-form select {
+.modal-form select,
+.modal-form textarea {
   width: 100%;
+}
+
+.modal-desc {
+  font-size: 13px;
+  color: var(--muted);
+  background: #f9fafb;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 0 0 4px;
 }
 
 .modal-actions {
